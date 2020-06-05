@@ -33,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
         Intent it = new Intent();
         it.setClass(this, GameActivity.class);
         startActivity(it);
-        finish();
-
+        finish();//註解
     }
 
     public void EndApp(View v){
