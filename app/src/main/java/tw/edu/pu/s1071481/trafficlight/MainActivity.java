@@ -10,7 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-
+    EditText edt1,edt2,edt3;
+    String str = "",str0 = "0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,13 +28,27 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
 
+        edt1 = (EditText)findViewById(R.id.edt1);
+        edt2 = (EditText)findViewById(R.id.edt2);
+        edt3 = (EditText)findViewById(R.id.edt3);
+
 
     }
     public void StartGame(View v){
-        Intent it = new Intent();
-        it.setClass(this, GameActivity.class);
-        startActivity(it);
-        finish();//註解
+        if(edt1.getText().toString().equals(str) || edt2.getText().toString().equals(str) || edt3.getText().toString().equals(str)){
+            Toast toast1 = Toast.makeText(this,"燈號的秒數不能為空白",Toast.LENGTH_SHORT);
+            toast1.show();
+        }else if(edt1.getText().toString().equals(str0) || edt2.getText().toString().equals(str0) || edt3.getText().toString().equals(str0)){
+            Toast toast2 = Toast.makeText(this,"燈號的秒數不能為0",Toast.LENGTH_SHORT);
+            toast2.show();
+        }else {
+            Intent it = new Intent();
+            it.setClass(this, GameActivity.class);
+            it.putExtra("Glight",Integer.parseInt(edt1.getText().toString()));
+            it.putExtra("Ylight",Integer.parseInt(edt2.getText().toString()));
+            it.putExtra("Rlight",Integer.parseInt(edt3.getText().toString()));
+            startActivity(it);finish();
+        }
     }
 
     public void EndApp(View v){
