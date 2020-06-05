@@ -25,7 +25,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
     float ratio, w, h; //比例及寬度與長度
 
     int step = 1; //步數
-
+    int score = 0;
 
     public GameSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -87,6 +87,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
             step++;
             if (step>8){
                 step = 1;
+                score++;
             }
             int res = getResources().getIdentifier("boy" + (step), "drawable", getContext().getPackageName());
             Boy = BitmapFactory.decodeResource(getResources(), res);
@@ -106,7 +107,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
         paint.setStyle(Paint.Style.FILL);
         paint.setTextSize((int) 60 * canvas.getHeight() / 1080);
         paint.setAntiAlias(true);
-        canvas.drawText("圖片編號：" + String.valueOf(step), (int) (0), (int) (canvas.getHeight()*0.1) ,paint);
+        canvas.drawText("圖片編號：" + String.valueOf(step)+"，分數："+String.valueOf(score), (int) (0), (int) (canvas.getHeight()*0.1) ,paint);
     }
 
     //紅綠燈繪製

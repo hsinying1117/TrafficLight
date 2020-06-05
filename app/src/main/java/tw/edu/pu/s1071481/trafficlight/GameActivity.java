@@ -7,14 +7,15 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     GameSurfaceView GameSV;
     Handler handler;
-
+    GestureDetector gsd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,18 +42,21 @@ public class GameActivity extends AppCompatActivity {
 
         handler= new Handler();
 
+        gsd = new GestureDetector(this,this);
+
     }
 
     //利用手指觸控，控制小男孩走路
     public boolean onTouchEvent (MotionEvent event){
-        if (event.getAction() == MotionEvent.ACTION_DOWN){
+        /*if (event.getAction() == MotionEvent.ACTION_DOWN){
             GameSV.BoyMoving = true;
             handler.post(runnable);
         }
         else if (event.getAction() == MotionEvent.ACTION_UP){
             GameSV.BoyMoving =  false;
             handler.removeCallbacks(runnable);  //銷毀執行緒
-        }
+        }*/
+        gsd.onTouchEvent(event);
         return true;
     }
 
@@ -66,5 +70,44 @@ public class GameActivity extends AppCompatActivity {
             handler.postDelayed(runnable, 50);
         }
     };
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        if(e1.getX()<e2.getX()){
+            GameSV.BoyMoving = true;
+            handler.post(runnable);
+        }else{
+            GameSV.BoyMoving = false;
+            handler.removeCallbacks(runnable);
+        }
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+        return false;
+    }
+
 
 }
